@@ -1,8 +1,11 @@
 const { Telegraf } = require('telegraf');
+const express = require('express');
 
-// Replace with your actual bot token
-const bot = new Telegraf('8130796063:AAEPP4_H6rlA4XsxQTKqT_mKcK3S4JjUZr8');
+const app = express();
+const PORT = process.env.PORT || 8080; // 👈 Now Railway has a port to bind
 
+// Bot setup
+const bot = new Telegraf('YOUR_BOT_TOKEN');
 const WEB_APP_URL = 'https://bot-forge-frontend.vercel.app';
 
 bot.start((ctx) => {
@@ -21,3 +24,7 @@ bot.command('launch', (ctx) => {
 
 bot.launch();
 console.log('🚀 Telegram Bot running...');
+
+// 👇 Dummy HTTP server to keep Railway container alive
+app.get("/", (req, res) => res.send("Bot is live."));
+app.listen(PORT, () => console.log(`✅ Server listening on port ${PORT}`));
